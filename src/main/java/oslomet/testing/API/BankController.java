@@ -92,7 +92,10 @@ public class BankController {
     public String endre(Kunde innKunde) {
         String personnummer = sjekk.loggetInn();
         if (personnummer!=null) {
+            System.out.println(personnummer);
+
                 innKunde.setPersonnummer(personnummer);
+
                 return repository.endreKundeInfo(innKunde);
             }
         return null;

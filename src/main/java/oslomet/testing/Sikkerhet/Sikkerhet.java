@@ -55,6 +55,8 @@ public class Sikkerhet {
         }
     }
 
+
+    // maybe, getmapping
     public String loggetInn() {
         if (session.getAttribute("Innlogget") != null){
             return (String) session.getAttribute("Innlogget");

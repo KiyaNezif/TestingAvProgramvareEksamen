@@ -79,6 +79,20 @@ public class TestingAdminKontoController {
         List<Konto> konti = new ArrayList<>();
         Konto konto1 = new Konto("105010123456", "01010110523",
                 720, "Lønnskonto", "NOK", null);
+        // check if konto1 is inserted
+        // update konto1
+
+        // konto1.setSaldo(8000);
+        // konto1 = konto2
+
+        // check if the konto1 is konto2
+
+
+
+        Konto konto2 = new Konto("105010123456", "01010110524",
+                800, "Lønnskonto", "NOK", null);
+
+
 
         //when(repository.endreKonto(any(Konto .class))).thenReturn("Ikke innlogget");
 
@@ -96,7 +110,7 @@ public class TestingAdminKontoController {
     }
 
     @Test
-    public void test_slettKontoOK() {
+    public void test_slettKonto () {
 
         String resultat = AdminController.slettKonto("1");
        assertEquals("Ikke innlogget", resultat);
