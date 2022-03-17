@@ -74,7 +74,9 @@ public class EnhetstestBankController {
         Transaksjon testtransaksjon2 = new Transaksjon(1, "58741259425", 4999.99, "2022-02-28", "NetOnNet","1", "5428458416");
         testTransaksjoner.add(testtransaksjon1);
         testTransaksjoner.add(testtransaksjon2);
+
         Konto testKonto = new Konto("01010110523", "5428458416", 20000.0, "Brukskonto", "NOK", testTransaksjoner);
+
         when(sjekk.loggetInn()).thenReturn("01010110523");
 
         when(repository.hentTransaksjoner("5428458416", "2022-02.18", "2022-02-28")).thenReturn(testKonto);
@@ -82,6 +84,13 @@ public class EnhetstestBankController {
         Konto resultat = bankController.hentTransaksjoner("5428458416", "2022-02.18", "2022-02-28");
 
         assertEquals(testKonto, resultat);
+    }
+
+    @Test
+    public void hentTransaksjoner_ikkeLoggetInn() {
+        when(sjekk.loggetInn()).thenReturn(null);
+        Konto resultat = bankController.hentTransaksjoner("5428458416", "2022-02.18", "2022-02-28");
+        assertNull(resultat);
     }
 
     @Test
@@ -120,7 +129,7 @@ public class EnhetstestBankController {
     }
 
     @Test
-    public void hentSaldi() {
+    public void hentSaldi_loggetInn() {
         //arrage
 
         List<Konto> konti = new ArrayList<>();
@@ -143,8 +152,29 @@ public class EnhetstestBankController {
         assertEquals(konti, resultat);
 
     }
+    @Test
+    public void hentSaldi_ikkeLoggetInn(){
+        when(sjekk.loggetInn()).thenReturn(null);
+        List<Konto> resultat = bankController.hentSaldi();
+        assertNull(resultat);
+    }
 
+    @Test
+    public void registrerBetaling_loggetInn(){
+        Transaksjon testTransaksjon = new Transaksjon(0, "41275254977", 3000, "2022-02-18", "overføringMellomKonti", "1", "5428458416");
+        when(sjekk.loggetInn()).thenReturn("01010110523");
+        when(repository.registrerBetaling(testTransaksjon)).thenReturn("testOk");
+        String resultat = repository.registrerBetaling(testTransaksjon);
+        assertEquals("testOk", resultat);
+    }
 
+    @Test
+    public void registrerBetaling_ikkeLoggetInn(){
+        Transaksjon testTransaksjon = new Transaksjon(0, "41275254977", 3000, "2022-02-18", "overføringMellomKonti", "1", "5428458416");
+        when(sjekk.loggetInn()).thenReturn(null);
+        String resultat = repository.registrerBetaling(testTransaksjon);
+        assertNull(resultat);
+    }
 
     @Test
     public void endreKunde() {
